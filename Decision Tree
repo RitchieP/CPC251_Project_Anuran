@@ -1,0 +1,43 @@
+# Load libraries
+import pandas as pd # For data manipulation
+import numpy as np # For data manipulation
+from sklearn.metrics import classification_report # For model evaluation metrics
+from sklearn import tree # For decision tree models
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+import plotly.express as px  # For data visualization
+import plotly.graph_objects as go # For data visualization
+import graphviz # For plotting decision tree graphs
+
+from google.colab import drive
+drive.mount('/drive')
+
+df = pd.read_csv('/drive/My Drive/Colab Notebooks/frogs_mfcc.csv')
+df
+
+# See how many unique values for each col
+df.nunique()
+
+# There is no Nan values
+df.isnull().sum()
+
+# Divide into attributes and label
+X = df.drop('Species', axis=1)
+y = df['Species']
+
+# Split dataset into training set and test set
+# Split up 30% of the data in to the test set and 70% for training
+from sklearn.model_selection import train_test_split # For splitting the data into train and test samples
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30)
+
+from sklearn.tree import DecisionTreeClassifier
+model = DecisionTreeClassifier()
+model.fit(X_train, y_train)
+predictions = model.predict(X_test)
+
+y_pred = classifier.predict(X_test)
+
+from sklearn.metrics import classification_report, confusion_matrix
+print(classification_report(y_test, predictions))
+print(confusion_matrix(y_test, predictions))
